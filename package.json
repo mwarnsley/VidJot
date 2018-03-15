@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mwarnsley/VidJot#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
     "npm": "^5.7.1"
   },
   "devDependencies": {
