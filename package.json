@@ -1,0 +1,26 @@
+{
+  "name": "vidjot",
+  "version": "1.0.0",
+  "description": "App to create video ideas",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwarnsley/VidJot.git"
+  },
+  "author": "Marcus Warnsley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwarnsley/VidJot/issues"
+  },
+  "homepage": "https://github.com/mwarnsley/VidJot#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "npm": "^5.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  }
+}
