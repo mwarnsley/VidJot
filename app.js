@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -20,6 +21,9 @@ const Idea = mongoose.model('ideas');
 app.use(bodyParser.urlencoded({extended: false}));
 // parse application/json
 app.use(bodyParser.json());
+
+// override with the X-HTTP-Method-Override header in the request
+app.use(methodOverride('_method'));
 
 // Including the handlebars middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -83,6 +87,19 @@ app.post('/ideas', (req, res) => {
       .then(idea => res.redirect('/ideas'))
       .catch(error => console.log('Error Saving: ', error));
   }
+});
+
+app.put('/ideas/:id', (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  })
+    .then(idea => {
+      idea.title = req.body.title;
+      idea.details = req.body.details;
+
+      idea.save().then(idea => res.redirect('/ideas').catch(error => console.log('Error saving idea: ', error)));
+    })
+    .catch(error => console.log('Error Updating Idea: ', error));
 });
 
 app.listen(PORT, () => {
