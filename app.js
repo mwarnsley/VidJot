@@ -25,8 +25,14 @@ app.get('/', (req, res) => {
   res.render('index', {title});
 });
 
+// Setup the about page
 app.get('/about', (req, res) => {
   res.render('about');
+});
+
+// Setup the add ideas page
+app.get('/ideas/add', (req, res) => {
+  res.render('ideas/add');
 });
 
 app.listen(PORT, () => {
