@@ -102,6 +102,13 @@ app.put('/ideas/:id', (req, res) => {
     .catch(error => console.log('Error Updating Idea: ', error));
 });
 
+// Delet Idea
+app.delete('/ideas/:id', (req, res) => {
+  Idea.remove({_id: req.params.id})
+    .then(() => res.redirect('/ideas'))
+    .catch(error => console.log('Error Deleting Idea: ', error));
+});
+
 app.listen(PORT, () => {
   console.log(`Application running on port: ${PORT}`);
 });
