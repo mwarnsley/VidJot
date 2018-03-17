@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
+
+// Bring in the new user model
+require('../models/User');
+const User = mongoose.model('users');
 
 // User login route
 router.get('/login', (req, res) => {
@@ -30,7 +36,35 @@ router.post('/register', (req, res) => {
       password2: req.body.password2
     });
   } else {
-    res.send('PASSED');
+    User.findOne({email: req.body.email})
+      .then(user => {
+        if (user) {
+          req.flash('error_msg', 'Email is already in use');
+          res.redirect('/users/register');
+        } else {
+          const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+          });
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) {
+                throw err;
+              }
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => {
+                  req.flash('success_msg', 'You are now registered!');
+                  res.redirect('/users/login');
+                })
+                .catch(error => console.log('Error saving user: ', error));
+            });
+          });
+        }
+      })
+      .catch(error => console.log('Error Finding User: ', error));
   }
 });
 
