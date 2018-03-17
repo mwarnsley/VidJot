@@ -1,8 +1,19 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = 4000;
+
+// Connect to mongoose
+mongoose
+  .connect('mongodb://localhost/vidjot-dev')
+  .then(() => console.log('MongoDB Connect...'))
+  .catch(error => console.log('Error: ', error));
+
+// Load Idea Model
+require('./models/Idea');
+const Idea = mongoose.model('ideas');
 
 // Including the handlebars middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
