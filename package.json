@@ -4,6 +4,7 @@
   "description": "App to create video ideas",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "repository": {
