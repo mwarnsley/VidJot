@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const app = express();
 const PORT = 4000;
@@ -13,6 +14,9 @@ const PORT = 4000;
 // Load the routes
 const ideas = require('./routes/ideas');
 const users = require('./routes/users');
+
+// Passport configuration
+require('./config/passport')(passport);
 
 // Connect to mongoose
 mongoose
@@ -40,6 +44,10 @@ app.use(
   })
 );
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Middleware for using connect-flash
 app.use(flash());
 
@@ -48,6 +56,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
   next();
 });
 
