@@ -7,6 +7,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const {mongoURI} = require('./config/database');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -20,7 +21,7 @@ require('./config/passport')(passport);
 
 // Connect to mongoose
 mongoose
-  .connect('mongodb://localhost/vidjot-dev')
+  .connect(mongoURI)
   .then(() => console.log('MongoDB Connect...'))
   .catch(error => console.log('Error: ', error));
 
